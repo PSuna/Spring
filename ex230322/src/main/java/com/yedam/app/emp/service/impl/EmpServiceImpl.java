@@ -14,8 +14,9 @@ public class EmpServiceImpl implements EmpService {
 		EmpMapper empMapper;
 	@Override
 	public EmpVO getEmpInfo(EmpVO empVO) {
-		// TODO Auto-generated method stub
+		
 		return empMapper.getEmp(empVO);
+		
 	}
 
 		
