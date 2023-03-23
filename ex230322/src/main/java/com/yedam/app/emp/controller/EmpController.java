@@ -16,6 +16,9 @@ public class EmpController {
 	EmpService empService;
 	
 	@RequestMapping("/getEmpInfo")
+	// 페이지를 리턴하지 않고 리턴되는 대상을 바디에 출력함
+	// 객체 => 텍스트로 변환 (직렬화)
+	// 객체에 대한 직렬화 작업 => jackSon 직렬화 databind
 	@ResponseBody
 	public EmpVO getEmpInfo(EmpVO empVO) {
 		return empService.getEmpInfo(empVO);
