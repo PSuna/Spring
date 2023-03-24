@@ -3,6 +3,7 @@ package com.yedam.spring.user.service;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 
@@ -20,9 +21,15 @@ public class UserVO {
 	// => @DateTimeFormat(pattern="yyyy-MM-dd") : 그걸 해결(보완하기 위해서) 스프링에서 지원해주는 어노테이션
 	// @DateTimeFormat(pattern="yyyy-MM-dd")은 출력과는 전혀 상관없음 , 입력받을때 나는 util이 가지는 기존 포맷말고
 	// yyyy-MM-dd 형식으로 입력받겠다라는 말
-	// @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss") 이렇게 시간까지 입력받을수 있음
+	// @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") 이렇게 시간까지 입력받을수 있음
 	
-	@DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
+	// yyyy/MM/dd hh:mm:ss
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date today;
 	
+	private MultipartFile pic;
+	
 }
+
+
+
