@@ -19,7 +19,7 @@ public interface BoardService {
 	public BoardVO getBoardNo();
 	
 	// 등록 - 등록된 글번호 반환
-	public int insertBoardInfo(BoardVO board);
+	public int insertBoardInfo(BoardVO boardVO);
 	
 	// 수정 - 수정된 글번호 반환
 	public int updateBoardInfo(BoardVO boardVO);

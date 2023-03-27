@@ -32,7 +32,7 @@ public class UserRestController {
 	// @RequestMapping의 value : 경로 , method : 통신방식 
 	// 이때 글자로 post라고 안쓰고 RequestMethod.POST라는 전역 번수를 씀
 	@RequestMapping(value="/insertUser", method=RequestMethod.POST)
-	public UserVO insertUser(UserVO userVO) {
+	public UserVO insertUser(UserVO userVO) { // 커맨드 객체 => 필드명이 중요함
 		
 		System.out.println("name : " + userVO.getName());
 		System.out.println("age : " + userVO.getAge());
@@ -41,7 +41,7 @@ public class UserRestController {
 	}
 	
 	@RequestMapping("/insertUsers")
-	public List<UserVO> insertUserList(UserListVO userListVO){
+	public List<UserVO> insertUserList(UserListVO userListVO){ // 커맨드 객체 => 필드명이 중요함
 		for(UserVO user : userListVO.getList()) {
 			System.out.println(user);
 		}
@@ -61,7 +61,7 @@ public class UserRestController {
 	public UserVO getUserData(@RequestParam("id") String name, @RequestParam(defaultValue="0", required=false) int age) {
 		UserVO userVO = new UserVO();
 		userVO.setName(name);
-		// 만약 int값이 필요한 경우 삼항 연산자 사용
+		// Integer타입에서 만약 int값이 필요한 경우 삼항 연산자 사용
 		// userVO.setAge(age==null ? 0 : age);
 		// defaultValue 로 값을 넣어줄수 있음 => @RequestParam(defaultValue="0", required=false) int age
 		userVO.setAge(age);

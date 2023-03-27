@@ -16,7 +16,7 @@ public interface BoardMapper {
 	public BoardVO getBoardNo();
 	
 	// 등록
-	public int insertBoard(BoardVO board);
+	public int insertBoard(BoardVO boardVO);
 	
 	// 수정
 	public int updateBoard(BoardVO boardVO);

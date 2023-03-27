@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yedam.spring.emp.service.EmpService;
 import com.yedam.spring.emp.service.EmpVO;
 
-@CrossOrigin
-@RestController // 다른페이지에서 요청하는것을 전제로함 따라서 @CrossOrigin 처리를 해줘야함
+@CrossOrigin // 다른페이지에서 요청하는것을 전제로함 따라서 @CrossOrigin 처리를 해줘야함
+@RestController // @ResponseBody + @Controller => REST는 페이지를 반환 시키지 않음, REST는 오로지 데이터를 주고 받음 
 public class EmpRestController {
 
 	@Autowired
@@ -51,7 +51,7 @@ public class EmpRestController {
 	public EmpVO updateEmpInfo(@PathVariable int employeeId, @RequestBody EmpVO empVO) {
 		empVO.setEmployeeId(employeeId);
 		empService.updateEmp(empVO);
-		return empVO;
+		return empVO; // 수정한 데이터 정보 반환
 	}
 	
 	// 삭제

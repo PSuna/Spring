@@ -22,7 +22,9 @@ public class BoardVO {
 
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date regdate;
+	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date updatedate;
+	
 	private String image;
 }

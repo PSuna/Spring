@@ -48,6 +48,7 @@
 	<!-- 등록 -->
 	<insert id="insertEmpInfo" parameterType="EmpVO">
 		<selectKey keyProperty="employeeId" resultType="int" order="BEFORE">
+			<!-- employee_id에 어떤한 데이터도 들어있지않고 MAX함수를 적용하면 null이 나옴 따라서 NVL처리는 항상 따라다님 -->
 			SELECT NVL(MAX(employee_id),0) + 1
 			FROM employees
 		</selectKey>
@@ -57,7 +58,7 @@
 	
 	
 	<!-- 수정 : 급여를 정해진 비율로 인상 -->
-	<!-- ★ 복수의 매개변수를 넘길때는 parameterType을 생략함 ★ -->
+	<!-- ★ 복수의 매개변수를 넘길때 parameterType은 생략함 ★ -->
 	<!-- ★ 매개변수가 1개만 넘어올땐 이름이 상관없음 단, 두개가 넘어올땐 어떤걸 어디에쓸건지 이름이 필요함 ★-->
 	<!-- => ★ 이때 메소드쪽에서  @Param 어노테이션을 사용하여 이름 처리를 해줘야함 ★ -->
 	<update id="updateEmpSal" >
@@ -67,12 +68,14 @@
 	</update>
 	
 	<!--  수정 : 사원 정보 수정 -->
-	<!--  어떤 정보를 수정할진 모르겠는 경우 -->
+	<!--  어떤 정보를 수정할지 모르겠는 경우 -->
 	<!--  1) 모든 항목에 업데이트 진행, 전제조건 : 모든항목에 정보가 존재해야함 -->
 	<!--  2) Mybatis -> Dynamic SQL사용 -->
 	<!--  test에서는 #을 쓰지 않음 -->
 	<!--  if문에는 자바식으로 쓰면 됨 -->
 	<!--  String 타입은 null, 숫자는 0 -->
+	<!--  ★ update문에서는 콤마(,)가 실행문 맨 마지막에 위치해야함 
+		  => 그래야 마이바티스에서 알아서 콤마에대해 처리를해줌 ★ -->
 	<update id="updateEmpInfo" parameterType="EmpVO">
 		UPDATE employees
 		<set>

@@ -45,13 +45,13 @@ public class EmpController {
 	}
 	
 	
-	// 등록 - Form
+	// 등록 - Form => GET방식
 	@GetMapping("/empInsert")
 	public String empInsertForm() {
 		return "emp/empInsert";
 	}
 	
-	// 등록 - Process
+	// 등록 - Process => POST방식
 	@PostMapping("/empInsert")
 	//<모델은 컨트롤러를 거쳐서 못감>
 	//redirect할땐 model로 넘겨주면 안됨 ⇒ redirect할때 넘겨주는 RedirectAttribuetes를 사용해야함
@@ -67,7 +67,7 @@ public class EmpController {
 		// RedirectAttribuetes에 데이터를 저장할수있는 메소드 addFlashAttribute
 		rrtt.addFlashAttribute("result", result);
 		
-		return "redirect:empList";
+		return "redirect:empList"; // 페이지 이동
 	}
 	
 	// 수정 - Process
