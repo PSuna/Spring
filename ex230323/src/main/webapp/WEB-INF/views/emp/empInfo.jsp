@@ -10,7 +10,8 @@
 </head>
 <body>
 	<!-- onSubmit="return false" submit 하는거 막아버리는것 -->
-	<form action="empUpdate" method="post" onSubmit="return false">
+	<!--  이벤트 전파를 막음 -->
+	<form onSubmit="return false">
 		<div>
 			<label> id : <input type="text" name="employeeId" value="${empInfo.employeeId}" readonly></label>
 		</div>
@@ -45,23 +46,43 @@
 		<button type="button">취소</button>
 	</form>
 	<script>
+	
+	// 페이지 전환(이동)없이 수정
+	function updateEmpInfo(){
 		fetch('empUpdate',{
 			method : 'post',
 			headers : {
 				'Content-Type' : 'application/json'
 			},
-			body : convertData();
+			body : JSON.stringify(serializeObject())
 		})
 		.then(response => response.json())
-		.then(data => console.log(data))
+		.then(data => {
+			if(data != null && data['결과'] == 'Success'){
+				alert('사원번호 : ' + data['사원번호'] + '의 정보가 수정되었습니다.');
+			}else{
+				alert('해당 사원의 정보가 정상적으로 수정되지 않았습니다.');
+			}
+		})
 		.catch(reject => console.log(reject));
+	}
+	
+	function serializeObject(){
+		// 직렬화 : 객체 => text로
+		// serializeArray : 직렬화 배열로 폼태그안에 있는걸 개별적으로 봄
+		// [{name : 'firstName', value : 'Steven'}, {name : '', value : ''},...]
+		// form 요소들(input, textarea, select)을 이름을 key로, 값을 value로 하는 배열로 인코딩합니다.
+		let formData = $('form').serializeArray(); 
+	
+		let objectData={}
+		formData.forEach(function(obj,idx){
+			objectData[obj.name] = obj.value
+		});
 		
-		function convertData(){
-			let selectForm = document.querySelector('form');
-			
-			let formData = new FormData(selectForm);
-			
-		}
+		return objectData;
+	}
+		document.querySelector('button[type="submit"]').addEventListener("click", updateEmpInfo);
+	
 	</script>
 </body>
 </html>

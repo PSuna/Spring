@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<!-- ★★ definition 순서가 중요 ★★ -->
+	<!-- template이 먼저이고 extends는 나중임 -->
+	<!-- 구조를 잡아줌 -->
+	<!-- template : 템플릿이 적용되는 레이아웃 -->
+	<!-- template="/WEB-INF/views/tiles/layout.jsp" 얘를 기반으로 템플릿을 만들겠다라는말 -->
+	<definition name="mainTemplate" template="/WEB-INF/views/tiles/layout.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/tiles/header.jsp"/>
+	</definition>
+	
+	<!-- ex. 'home' 하나일때 타일즈 적용 -->
+	<!-- <definition name="*" extends="mainTemplate">
+		<put-attribute name="main" value="/WEB-INF/views/*.jsp"/>
+	</definition> -->
+	
+	<!-- ex. 'home' 하나일때 타일즈 적용 -->
+	<definition name="home" extends="mainTemplate">
+		<put-attribute name="main" value="/WEB-INF/views/home.jsp"/>
+	</definition>
+	
+	<!-- 위의 정의된 템플릿을 기반으로해서 main을 어떻게 정의할것인지 -->
+	<!-- name="*/*" 와 value="/WEB-INF/views/{1}/{2}.jsp"를 보면 */* 페이지는 타일즈가 적용이 되지만 -->
+	<!-- ex. 'home' 하나일땐 타일즈가 적용되지않음 -->
+	<definition name="*/*" extends="mainTemplate">
+		<put-attribute name="main" value="/WEB-INF/views/{1}/{2}.jsp"/>
+	</definition>
+	
+	
+	<!-- 아래의 코드는 실행안됨 왜냐하면 앞의 */* 에서 미리 걸러지므로 -->
+	<!-- 따라서 */* 보다 admin/* 이 먼저 와야함 => ★ 따라서 definition에선 순서가 중요함 ★ -->
+	<!-- <definition name="admin/*" extends="mainTemplate">
+		<put-attribute name="main" value="/WEB-INF/views/admin/{1}.jsp"></put-attribute>
+	</definition> -->
+	
+</tiles-definitions>
