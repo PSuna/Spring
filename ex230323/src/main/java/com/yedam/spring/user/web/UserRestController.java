@@ -1,14 +1,10 @@
 package com.yedam.spring.user.web;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
-
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -108,10 +105,14 @@ public class UserRestController {
 	}
 	
 	@PostMapping("/upload")
-	public String uploadFile(UserVO userVO) {
-		System.out.println("name : " + userVO.getName());
-		System.out.println("file : " + userVO.getPic().getOriginalFilename());
-		return "업로드를 완료했습니다.";
+	// 개별로 처리를 해야한다면 @RequestPart MultipartFile[] pic로 지정
+	public String uploadFile(@RequestPart MultipartFile[] pic) {
+		//System.out.println(userVO);
+		//System.out.println("name : " + userVO.getName());
+		//System.out.println("file : " + userVO.getPic().getOriginalFilename());
+		
+		System.out.println(pic[0].getOriginalFilename());
+		return "Upload complete!";
 	}
 	
 	

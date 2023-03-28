@@ -29,7 +29,7 @@ public class UserVO {
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date today;
 	
-	private MultipartFile pic;
+	private MultipartFile[] pic; // Multilpart 부분 : 배열로 선언 => 여러건에대한 처리를 하기위해서
 	
 }
 
