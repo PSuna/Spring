@@ -26,7 +26,7 @@
 				<td>${board.bno }</td>
 				<td>${board.title }</td>
 				<td>${board.writer }</td>
-				<td><fmt:formatDate value="${board.regdate}" pattern = "yyyy'년'MM'월'dd'일'"/></td>
+				<td><fmt:formatDate value="${board.regdate}" pattern = "yyyy년MM월dd일"/></td>
 				<td><button onclick='boardUpdate(${board.bno},event)'>수정</button></td>
 				<td><button onclick='boardDelete(${board.bno},event)'>삭제</button></td>
 			</tr>
@@ -37,12 +37,12 @@
 	<script>
 	function boardUpdate(bno, event){
 		location.href="boardUpdate?bno="+bno
-		event.stopPropagation();
+		event.stopPropagation(); // 이벤트 버블링 막음
 	}
 	
 	function boardDelete(bno, event){
 		location.href="boardDelete?bno="+bno
-		event.stopPropagation();
+		event.stopPropagation(); // 이벤트 버블링 막음
 	}
 	
 	</script>
