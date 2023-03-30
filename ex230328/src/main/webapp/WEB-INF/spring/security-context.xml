@@ -9,14 +9,14 @@
   
 	<security:http>
 		<!-- access="permitAll()" : 권한에 대한 체크가 들어감 => permitAll 시큐리티에 대한 메소드 -->
-		<!-- permitAll : 인증, 인가 무시하고 접속하는 모든 사람들에대해서 허용을 하겠다는 의미 -->
+		<!-- permitAll : 인증, 인가 무시하고 접속하는 모든 사람들에대해서 허용을 하겠다는 의미 => 모든 사용자 허용 -->
 		<security:intercept-url pattern="/top.jsp" access="permitAll()"/>
 		
 		<!-- access="hasAuthority('ROLE_ADMIN')" : 특정한 권한을 가지사람만 체크 -->
 		<!-- hasAuthority('ROLE_ADMIN') : 특정한 권한을 가진 경우에만 접근이 가능함 여기선 관리자롤 -->
 		<security:intercept-url pattern="/admin/**" access="hasAuthority('ROLE_ADMIN')"/>
 		
-		<!-- isAuthenticated() : 인증된 사람만 접근가능함 -->
+		<!-- isAuthenticated() : 인증된 사람모든사람이 접근가능함 -->
 		<!-- 권한과 상관없이 인증을한 어드민, 유저 모두 접근가능함 -->
 		<security:intercept-url pattern="/**" access="isAuthenticated()"/>
 		
@@ -24,19 +24,36 @@
 		<!-- form-login : 로그인 페이지를 처리하는 컨트롤러를 연결 -->
 		<!-- default-target-url="/top.jsp" : 로그인을 성공하면 이동하는 페이지 -->
 		<security:form-login default-target-url="/top.jsp"/>
+		
+		<!-- logout-url : 로그아웃 처리할 URL (security가 알아서 만들기 때문에, 이 경로로 요청만 하면된다) -->
 		<!-- logout-url 로그아웃을 요청했을때 어디로 보낼건지 정의하는것 -->
 		<!-- logout-success-url : 로그아웃이 성공했을때 이동하는 페이지 -->
 		<security:logout logout-url="/logout" logout-success-url="/top.jsp"/>
 		<security:csrf disabled="true"/>
 	</security:http>
 	
+	
 	<security:authentication-manager>
-		<security:authentication-provider>
-			<security:user-service>
-				<security:user name="user" password="1234" authorities="ROLE_USER"/>
-				<security:user name="admin" password="1234" authorities="ROLE_ADMIN"/>
-			</security:user-service>
-		</security:authentication-provider>
-	</security:authentication-manager>
+	<!-- provider : 인증처리하는애, 인증을 체크하는애 = 등록되어있는지 체크하는애  -->
+    <security:authentication-provider>
+       <!-- data를 들고있는 bean을 참조한다 -->
+       <!-- users-by-username-query은 인증 처리 -->
+       <!-- authorities-by-username-query은 권한을 처리 -->
+       <!-- jdbc-user-service : 세션에 저장하는애 -->
+      <security:jdbc-user-service data-source-ref="dataSource"
+          users-by-username-query
+            ="select LOGIN_ID, PASSWORD, 1
+              from T_USER
+              where LOGIN_ID = ?"
+          authorities-by-username-query
+            ="select LOGIN_ID, ROLE_NAME
+              from T_ROLE
+                inner join T_USER_ROLE on T_ROLE.ID = T_USER_ROLE.ROLE_ID
+                inner join T_USER on T_USER_ROLE.USER_ID = T_USER.ID
+              where LOGIN_ID = ?" />
+       <!-- 로그인할때 사용하는 비밀번호의 복호화작업을 실행함 ( 들어오는 data에 대해 암호화 작업해애함 ) -->
+       <security:password-encoder hash="bcrypt"/> <!-- bcrypt : 복호화 작업을함 -->
+    </security:authentication-provider>
+  </security:authentication-manager>
 
 </beans>

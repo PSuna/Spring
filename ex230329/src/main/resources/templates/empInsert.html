@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<!-- th:object="${EmpVO}" : 해당 페이지를 호출할때 new EmpVO로 담아서 보내줘야함 -->
+	<form th:action="@{/empInsert}" method="post" th:object="${empVO}">
+		<div>
+			<label id="empId">사원번호</label>
+			<!-- th:field="*{employeeId}" : empVO안에 있는 필드를 의미 setter느낌 -->
+			<input type="text" id="empId" th:field="*{employeeId}">
+		</div>
+		<div>
+			<label id="name">이름</label>
+			<input type="text" id="name" th:field="*{lastName}">
+		</div>
+		<div>
+			<label id="email">이메일</label>
+			<input type="text" id="email" th:field="*{email}">
+		</div>
+		<div>
+			<label id="hireDate">입사일</label>
+			<!-- input의 date타입이므로 yyyy-MM-dd로 들어감 -->
+			<input type="date" id="hireDate" th:field="*{hireDate}">
+		</div>
+		<div>
+			<label id="job">업무</label>
+			<input type="text" id="job" th:field="*{jobId}">
+		</div>
+		<div>
+			<button type="submit">등록</button>
+			<button type="button">취소</button>
+		</div>
+	</form>
+</body>
+</html>
